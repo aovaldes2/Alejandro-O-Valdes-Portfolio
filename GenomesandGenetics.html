@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Of Genomes and Genetics</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+
+		<!-- Wrapper -->
+		<div id="wrapper" class="fade-in">
+
+			<!-- Intro -->
+				<div id="intro">
+					<h1>Of Genomes and Genetics<br />
+					</h1>
+					<p>Portfolio of <a href="https://www.linkedin.com/in/aovaldes2/">Alejandro O. Valdés</a>, a mathematician specialized in data science.</p>
+					<ul class="actions">
+						<li><a href="DS_CV.pdf" class="button icon solid fa-download">Curriculum Vitae</a></li>
+					</ul>
+					<ul class="actions">
+						<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+					</ul>
+				</div>
+
+			<!-- Header -->
+				<header id="header">
+					<a href="index.html" class="logo">Return to Main Page</a>
+				</header>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul class="links">
+					<li><a href="QInsincereQuestion.html">Quora Insincere Questions</a></li>
+					<li  class="active"><a href="GenomesandGenetics.html">Of Genomes and Genetics</a></li>
+					<li><a href="FCTPrediction.html">Forest Cover Type</a></li>
+					<li><a href="NYCTaxiTripDuration.html">NYC Taxi Trip Duration</a></li>
+				</ul>
+				<ul class="icons">
+					<li><a href="https://www.linkedin.com/in/aovaldes2/" class="icon brands alt fa-linkedin"><span class="label">Instagram</span></a></li>
+					<li><a href="https://github.com/aovaldes2" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+			</nav>
+
+			<!-- Main -->
+				<div id="main">
+
+
+					
+					<!-- Featured Post -->
+					<section class="post">
+						<header class="major">
+							<h2><a href="https://github.com/aovaldes2/Data-Science-Portfolio/tree/main/Of%20Genomes%20And%20Genetics"><br/>Of Genomes And Genetics</a></h2>
+						<a href="images\dataset-cover.jpg" class="image fit"><img src="images\dataset-cover.jpg" alt="" /></a>
+						</header>
+
+
+					
+
+						<p>In this Hackerearth challenge <a href="https://www.hackerearth.com/challenges/competitive/hackerearth-machine-learning-challenge-genetic-testing/"><b>[link]</b></a>, you are given a dataset that contains medical information of children who have genetic disorders.</p>
+						
+						<p>You are set to predict the following:</p>					
+						<div class="row">
+							<ul>
+								<li><b>Disorder subclass</b>.</li>
+								<li><b>Genetic disorder</b>.</li>
+							</ul>
+						</div>
+
+						<p>With the evaluations metrics</p>
+
+						<p>Genetic Disorder
+
+<pre><code>
+score1 = max(0, 100*metrics.f1_score(actual["Genetic Disorder"], predicted["Genetic Disorder"], average="macro"))
+</code></pre>
+						</p>
+
+						<p>Disorder Subclass
+
+<pre><code>
+score2 = max(0, 100*metrics.f1_score(actual["Disorder Subclass"], predicted["Disorder Subclass"], average="macro"))
+</code></pre>
+						</p>
+
+						<p>Final score
+
+<pre><code>
+score = (score1/2)+(score2/2)
+</code></pre>
+						</p>
+						
+						<p>I used two main notebooks</p> 
+
+						<a href="https://github.com/aovaldes2/Data-Science-Portfolio/blob/main/Of%20Genomes%20And%20Genetics/notebooks/1_GeneticDisorder_preprocessing.ipynb"><b>1_GeneticDisorder_preprocessing.ipynb</b></a>
+
+						<p>Although a much more extensive EDA was performed on the notebook named GeneticDisorderEDAv1 the most important transformations to the data for modeling occurred on this one. Of the 44 columns, 13 that would not provide relevant information were discarded at first, from the first moment it can be observed in the data that they present many missing data to solve this problem, MICE (Multiple Imputations by Chained Equations) imputation will be applied.
+						 This approach may be generally referred to as fully conditional specification (FCS) or multivariate imputation by chained equations (MICE).</p>
+
+						<blockquote>This methodology is attractive if the multivariate distribution is a reasonable description of the data. FCS specifies the multivariate imputation model on a variable-by-variable basis by a set of conditional densities, one for each incomplete variable. Starting from an initial imputation, FCS draws imputations by iterating over the conditional densities. A low number of iterations (say 10–20) is often sufficient.</blockquote>
+
+						<p>— mice: Multivariate Imputation by Chained Equations in R, 2009.</p>
+
+						<p>Non-numeric values can be observed in the data whose transformation is important for our modelling. For this, the variables were separated between categorical and non-categorical to later apply the ordinal encoding method to encode the categorical variables. The variant of using ordinal encoding came from experimentation and obviously these operations were performed by joining the test and training data.</p>
+
+						<a href="https://github.com/aovaldes2/Data-Science-Portfolio/blob/main/Of%20Genomes%20And%20Genetics/notebooks/2_GeneticDisorder_finalmodeling.ipynb"><b>2_GeneticDisorder_finalmodelling.ipynb</b></a> 
+
+						<p>In this notebook the main objective is to perform the runs using different models. For this, the data is also transformed, starting with our target variables: Genetic Disorder and Disorder Subclass, which are categorical variables whose characteristics and the data itself allow us to create a single variable without the risk of overlapping. Then, when analyzing the new target variable, it can be seen that the data is unbalanced.
+						 During the experimentation, an improvement in the results was observed when the the target variable is balanced, so the data was balanced by Over Sampling using SMOTE (Synthetic Minority Oversampling Technique).</p>
+
+						<p>This technique was described by Nitesh Chawla, et al. in their 2002 paper named for the technique titled “SMOTE: Synthetic Minority Over-sampling Technique.”</p>
+
+						<blockquote>SMOTE works by selecting examples that are close in the feature space, drawing a line between the examples in the feature space and drawing a new sample at a point along that line.</blockquote> 
+
+						<p>Then we proceed to run the models whose results can be seen in the following table:</p>
+
+						<div class="table-wrapper">
+							<table class="alt">
+								<thead>
+									<tr>
+										<th>Model</th>
+										<th>Score</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>GradientBoostingClassifier</td>
+										<td>33.60688</td>
+									</tr>
+									<tr>
+										<td>XGBoostClassifier</td>
+										<td>33.52182</td>
+									</tr>
+									<tr>
+										<td>LGBMClassifier</td>
+										<td>32.99259</td>
+									</tr>
+									<tr>
+										<td>CatboostClassifier</td>
+										<td>35.20506</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="1"></td>
+										<td>Best Score <b>35.20506</b></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+
+
+
+
+
+
+						<p>The best ranked result would be the CatboostClassifier model in 18th place out of 2138 participants.</p>
+
+						<ul class="actions special">
+							<li><a href="https://github.com/aovaldes2/Data-Science-Portfolio/tree/main/Of%20Genomes%20And%20Genetics" class="button large">View Project Code</a></li>
+						</ul>
+					
+					
+
+				</section>
+
+					
+
+
+				</div>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<section>
+						<form method="post" action="https://formsubmit.co/aovaldes2@gmail.com">
+							<input type="hidden" name="_subject" value="New contact from the Data-Science-Portfolio website!!">
+							<div class="fields">
+								<div class="field">
+									<label for="name">Name</label>
+									<input type="text" name="name" id="name" placeholder="Name" required/>
+								</div>
+								<div class="field">
+									<label for="email">Email</label>
+									<input type="text" name="email" id="email" placeholder="Email Address" required/>
+								</div>
+								<div class="field">
+									<label for="message">Message</label>
+									<textarea name="message" id="message" rows="3" placeholder="Write your message to Alejandro here" required></textarea>
+								</div>
+							</div>
+							<ul class="actions">
+								<li><input type="submit" value="Send Message" /></li>
+							</ul>
+						</form>
+					</section>
+					<section class="split contact">
+						<section class="alt">
+							<h3>Address</h3>
+							<p>Leganés, CP 28911<br />
+							Madrid, España</p>
+						</section>
+						<section>
+							<h3>Phone</h3>
+							<p><a href="#">(+34) 631-327628</a></p>
+						</section>
+						<section>
+							<h3>Email</h3>
+							<p><a href="#">aovaldes2@gmail.com</a></p>
+						</section>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+								<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+								<li><a href="https://www.linkedin.com/in/aovaldes2/" class="icon brands alt fa-linkedin"><span class="label">Instagram</span></a></li>
+								<li><a href="https://github.com/aovaldes2" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+					</section>
+				</footer>
+
+			<!-- Copyright -->
+				<div id="copyright">
+					<ul><li>&copy; Home Cuba</li><li>Maintained by: <a href="https://www.linkedin.com/in/aovaldes2/">Alejandro O. Valdés</a></li></ul>
+				</div>
+			
+
+		</div>
+
+	<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+</body>
+</html>

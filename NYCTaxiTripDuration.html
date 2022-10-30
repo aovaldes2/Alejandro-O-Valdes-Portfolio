@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>New York City Taxi-Trip Duration</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+
+		<!-- Wrapper -->
+		<div id="wrapper" class="fade-in">
+
+			<!-- Intro -->
+				<div id="intro">
+					<h1>New York City Taxi Trip Duration<br />
+					</h1>
+					<p>Portfolio of <a href="https://www.linkedin.com/in/aovaldes2/">Alejandro O. Valdés</a>, a mathematician specialized in data science.</p>
+					<ul class="actions">
+						<li><a href="DS_CV.pdf" class="button icon solid fa-download">Curriculum Vitae</a></li>
+					</ul>
+					<ul class="actions">
+						<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+					</ul>
+				</div>
+
+			<!-- Header -->
+				<header id="header">
+					<a href="index.html" class="logo">Return to Main Page</a>
+				</header>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul class="links">
+					<li><a href="QInsincereQuestion.html">Quora Insincere Questions</a></li>
+					<li><a href="GenomesandGenetics.html">Of Genomes and Genetics</a></li>
+					<li><a href="FCTPrediction.html">Forest Cover Type</a></li>
+					<li class="active"><a href="NYCTaxiTripDuration.html">NYC Taxi Trip Duration</a></li>
+				</ul>
+				<ul class="icons">
+					<li><a href="https://www.linkedin.com/in/aovaldes2/" class="icon brands alt fa-linkedin"><span class="label">Instagram</span></a></li>
+					<li><a href="https://github.com/aovaldes2" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+			</nav>
+
+			<!-- Main -->
+				<div id="main">
+
+
+					
+					<!-- Post -->					
+					<section class="post">
+						<header class="major">
+						<h2><a href="#"><br/>New York City Taxi-Trip Duration</a></h2>
+						<a href="images\Presentation[NYCTD].png" class="image fit"><img src="images\Presentation[NYCTD].png" alt="" /></a>
+						</header>
+
+						<p> In this competition <a href="https://www.kaggle.com/competitions/nyc-taxi-trip-duration/submissions"><b>[link]</b></a>, Kaggle is challenging you to build a model that predicts the total ride duration of taxi trips in New York City. Your primary dataset is one released by the NYC Taxi and Limousine Commission, which includes pickup time, geo-coordinates, number of passengers, and several other variables.</p>
+
+						<p> The competition dataset is based on the 2016 NYC Yellow Cab trip record data made available in Big Query on Google Cloud Platform. The data was sampled and cleaned for the purposes of this playground competition. Based on individual trip attributes, participants should predict the duration of each trip in the test set.</p>
+
+						<p> File descriptions:
+
+						<div class="row">		
+							<li><b>train.csv</b>- the training set (contains 1458644 trip records).</li>
+							<li><b>test.csv</b>- the testing set (contains 625134 trip records).</li>
+						</div></p>
+						<p>In this case I use a single notebook loadable from google colab.<a href="https://github.com/aovaldes2/Data-Science-Portfolio/blob/main/New_York_City_Taxi_Trip_Duration.ipynb"><b>[link]</b></a></p>
+
+						<p> In the first instance, a simple EDA is carried out with the base features of the problem, where it is observed that there are no Nan elements in the database, that this database has features such as pickup and dropoff time(presented as datetime) as well as the respective coordinates of the trip (each presented as a float).
+						Other types of data like objects or integers its found in the rest of the features such as <b>passenger_count</b>, <b>store_and_fwd_flag</b>, <b>vendor_id</b>. The target feature <b>trip_duration</b> was presented as an integer since it represents the time in seconds.</p>
+
+						<h3>Feature Creation(Feature Engineering & Selection)</h3>
+
+						<h4>Distances</h4>
+						
+						<p>New features were created from existing ones, for example, the datetimes were broken down to the unit of minutes, as well as the coordinates of the trip were used to calculate 2 types of distances <b>Haversine Distance</b> and <b>Dummy Distance</b>.</p>
+
+						<dl>
+							<dt><b>Haversine Distance</b></dt>
+							<dd>
+								<p>Euclidean Distance works for the flat surface like a Cartesian plain however, Earth is not flat. So we have to use a special type of formula known as Haversine Distance. Haversine Distance can be defined as the angular distance between two locations on the Earth's surface.</p>
+							</dd>
+							<dt>Dummy Distance</dt>
+							<dd>
+								<p>The distance calculated from Haversine Distance made up of the perpendicular paths between the two points in question (Let P1(lat1, lng1) and P2(lat2, lng2) then dummy.distance = haversine.distance(lat1, lng1, lat1, lng2)+haversine.distance(lat1, lng1, lat2, lng1)).</p>
+							</dd>
+						</dl>
+
+						<p>These new features gave the possibility of calculating the average speed of each trip as well as its breakdown by hours, day of the week, etc.</p>
+
+						<a href="./DS_images/SpeedDesc%5BNYCTD%5D.png" class="image main"><img src="./DS_images/SpeedDesc%5BNYCTD%5D.png" alt="img3" /></a>
+
+						<h4> Direction</h4>
+						<p>Another important feature created in this section will be the direction of the trip, this importance could be seen graphically by representing the differences between latitudes and longitudes:</p>
+
+						<a href="./DS_images/DirIntu%5BNYCTD%5D.png" class="image main"><img src="./DS_images/DirIntu%5BNYCTD%5D.png" alt="img4" /></a>
+
+						<h4>Clustering</h4>
+
+						<p>Besides of keeping entire list of latitude and longitute, the data will be grouped by some approximate locations. It might be helpful for tree-based algorithms. New features were created from clustering such as <b>pickup_cluster</b> and <b>dropoff_cluster</b>.</p>
+
+						<h3>Additional Datasets</h3>
+
+						<h4>OSMR features</h4>
+						
+						<p>We had only rough distance estimates in the previous versions. We will now use additional data extracted from OpenStreetMap which was used successfully in the top scores. Most of the high scores use <a href="https://www.kaggle.com/oscarleo/new-york-city-taxi-with-osrm">[Data about Fastest Routes]</a>. Travel distance should be more relevent here. The difficult part is to adquire this feature. Thanks to Oscarleo who manage to pull it off from OSRM.</p>
+
+						<p>New features were added to our model from this database, such as <b>total_distance</b>, <b>total_travel_time</b> and <b>number_of_steps</b>.</p>
+
+
+						<h3>Weather features</h3>
+
+						<p>This dataset(<a href="https://www.kaggle.com/datasets/cabaki/knycmetars2016">[KNYC Metars 2016]</a>) is ment to be used as a extra information for those willing to extract conclusions from their own dataset where hourly weather information could be useful for their predictions / analysis. This is the METARs aggregated information for 2016 in KNYC. In this case where added <b>minimum temperature</b>, <b>precipitation</b>, <b>snow fall</b> and <b>snow depth</b> to our model.</p>
+
+
+						<h3>Model Training(Hyperparameter Tuning)</h3>
+
+
+						<p>Several algorithms can be used in this case I prefer a tree-based algorithm <b>XGBRegressor</b>. As we know optimizing the hyperparameters for machine learning models is vital to the performance of the machine learning models and the process of tuning the HPs is not intuitive and can be a complex task. In this case its use Randomized Search for a shorter run-time although may not return the best combination of hyper-parameters that would return the best score(neg_mean_squared_error), this method doesn't consider past evaluations and it will continue the iterations regardless of the results. In the end, for the chosen model, it was obtained:</p>
+
+
+
+						<pre><code>
+method XGBModel.get_xgb_params of XGBRegressor(booster='gblinear', colsample_bytree=0.6, eta=0.04,
+eval_metric='rmse', gamma=2, lambda=2, max_depth=10,
+min_child_weight=5, n_estimators=500, nthread=-1, predictor='u',
+random_state=42, silent=1, subsample=0.75)
+						</code></pre>
+						<a href="./DS_images/Submision%5BNYTD%5D.png" class="image main"><img src="./DS_images/Submision%5BNYTD%5D.png" alt="img5" /></a>
+					
+
+
+
+					
+					<ul class="actions special">
+						<li><a href="https://github.com/aovaldes2/Data-Science-Portfolio/blob/main/New_York_City_Taxi_Trip_Duration.ipynb" class="button large">View Project Code</a></li>
+					</ul>
+					</section>
+
+					
+
+
+				</div>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<section>
+						<form method="post" action="https://formsubmit.co/aovaldes2@gmail.com">
+							<input type="hidden" name="_subject" value="New contact from the Data-Science-Portfolio website!!">
+							<div class="fields">
+								<div class="field">
+									<label for="name">Name</label>
+									<input type="text" name="name" id="name" placeholder="Name" required/>
+								</div>
+								<div class="field">
+									<label for="email">Email</label>
+									<input type="text" name="email" id="email" placeholder="Email Address" required/>
+								</div>
+								<div class="field">
+									<label for="message">Message</label>
+									<textarea name="message" id="message" rows="3" placeholder="Write your message to Alejandro here" required></textarea>
+								</div>
+							</div>
+							<ul class="actions">
+								<li><input type="submit" value="Send Message" /></li>
+							</ul>
+						</form>
+					</section>
+					<section class="split contact">
+						<section class="alt">
+							<h3>Address</h3>
+							<p>Leganés, CP 28911<br />
+							Madrid, España</p>
+						</section>
+						<section>
+							<h3>Phone</h3>
+							<p><a href="#">(+34) 631-327628</a></p>
+						</section>
+						<section>
+							<h3>Email</h3>
+							<p><a href="#">aovaldes2@gmail.com</a></p>
+						</section>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+								<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+								<li><a href="https://www.linkedin.com/in/aovaldes2/" class="icon brands alt fa-linkedin"><span class="label">Instagram</span></a></li>
+								<li><a href="https://github.com/aovaldes2" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+					</section>
+				</footer>
+
+			<!-- Copyright -->
+				<div id="copyright">
+					<ul><li>&copy; Home Cuba</li><li>Maintained by: <a href="https://www.linkedin.com/in/aovaldes2/">Alejandro O. Valdés</a></li></ul>
+				</div>
+
+		</div>
+
+	<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+</body>
+</html>
